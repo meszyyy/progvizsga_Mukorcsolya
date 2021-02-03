@@ -117,48 +117,23 @@ namespace Helsinki2017
                 }
             }
             #endregion
-
-            #region Alternativ megoldas 7. feladat
-            /*foreach (Korcsolya versenyzo in dontoList)
-            {
-                if (!OrszagLista.Contains(versenyzo.Orszag))
-                {
-                    OrszagLista.Add(versenyzo.Orszag);
-                }
-            }
-            foreach (string orszag in OrszagLista)
-            {
-                int db = 0;
-                foreach (Korcsolya versenyzo in dontoList)
-                {
-                    if (versenyzo.Orszag == orszag)
-                    {
-                        db++;
-                    }
-                }
-                if (db > 1)
-                {
-                    Console.WriteLine($"\t{orszag}: {db} versenyzo");
-                }
-            }*/
-            #endregion
-
+                
             #region 8. feladat
             Console.WriteLine("8. feladat: vegeredmeny.csv");
             StreamWriter Iro = new StreamWriter("vegeredmeny.csv", false, Encoding.Default);
             for (int i = 0; i < dontoList.Count; i++)
             {
-                Korcsolya newkori = dontoList[i];
-                newkori.osszPont = osszPontSzam(dontoList[i].Nev);
-                dontoList[i] = newkori;
+                Korcsolya newkorcsolya = dontoList[i];
+                newkorcsolya.osszPont = osszPontSzam(dontoList[i].Nev);
+                dontoList[i] = newkorcsolya;
             }
             dontoList = dontoList.OrderBy(versenyzo => versenyzo.osszPont).ToList();
             dontoList.Reverse();
 
             int Helyezes = 1;
-            foreach (Korcsolya versenyzo in dontoList)
+            foreach (Korcsolya i in dontoList)
             {
-                Iro.WriteLine($"{Helyezes};{versenyzo.Nev};{versenyzo.Orszag};{versenyzo.osszPont}");
+                Iro.WriteLine($"{Helyezes};{i.Nev};{i.Orszag};{i.osszPont}");
                 Helyezes++;
             }
             Iro.Close();
@@ -170,19 +145,19 @@ namespace Helsinki2017
         static double osszPontSzam(string nev)
         {
             double osszPont = 0;
-            foreach (Korcsolya versenyzo in rovidProgList)
+            foreach (Korcsolya i in rovidProgList)
             {
-                if (versenyzo.Nev == nev)
+                if (i.Nev == nev)
                 {
-                    osszPont += versenyzo.TechPontszam + versenyzo.KompPontszam - versenyzo.Levonas;
+                    osszPont += i.TechPontszam + i.KompPontszam - i.Levonas;
                 }
             }
 
-            foreach (Korcsolya versenyzo in dontoList)
+            foreach (Korcsolya i in dontoList)
             {
-                if (versenyzo.Nev == nev)
+                if (i.Nev == nev)
                 {
-                    osszPont += versenyzo.TechPontszam + versenyzo.KompPontszam - versenyzo.Levonas;
+                    osszPont += i.TechPontszam + i.KompPontszam - i.Levonas;
                 }
             }
             return osszPont;
